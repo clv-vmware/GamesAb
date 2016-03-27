@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>closure</title>
+  <style>
+      #node {
+          height: 500px;
+          width: 500px;
+          background-color: #f80;
+      }
+  </style>
+</head>
+<body>
+    <div id="node"></div>
+<script>
+    var url = "https://www.google.com.sg/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=%E5%A4%A7%E5%AE%B6%E7%9C%8B%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B9%A6";
+
+    var res = url.split(/[\?\&]/g);
+    console.log(res);
+    res.forEach(function (item) {
+        var para = item.split(/[=]/g);
+        console.log(item);
+        console.log(para);
+
+    });
+
+
+  //  console.log(myObj);
+</script>
+</body>
+</html>

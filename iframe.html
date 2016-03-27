@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Corsshairs</title>
+  <style>
+    #paint {
+      position: absolute;
+      left: 222px;
+      top: 33px;
+    }
+    #can {
+      height: 500px;
+      width: 500px;
+      background-color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div id="position"></div>
+  <div id="paint">
+    <canvas id = "can">
+
+    </canvas>
+
+  </div>
+  <script type="text/javascript" src = "./js/crosshairs.js"></script>
+  <script type="text/javascript">
+
+    var canvas = document.getElementById('can'),
+        ctx = canvas.getContext('2d');
+    var w = canvas.width,
+        h = canvas.height;
+
+    canvas.addEventListener("mousemove", function(e ) {
+      var bbox = this.getBoundingClientRect();
+      var xx = e.clientX + document.body.scrollLeft ,//- bbox.left * (w / bbox.width),
+          yy = e.clientY + document.body.scrollTop;//- bbox.top * (h / bbox.height);
+      //console.log("bbox : ", bbox.left);
+      //console.log("bbox : ", bbox.top);
+      var pos = getMousePos(canvas, e);
+      clear(canvas);
+      drawVerticalLine(canvas, {x:pos.x  , y: pos.y});
+      drawHorizontalLine(canvas, {x:pos.x, y: pos.y});
+      showPosition(e);
+
+    }, false );
+  </script>
+</body>
+</html>

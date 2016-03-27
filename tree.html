@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>tree</title>
+</head>
+<body>
+  <canvas id="can">canvas not supported</canvas>
+  <script>
+    var canvas = document.getElementById('can'),
+        ctx = canvas.getContext('2d'),
+        width = canvas.width,
+        height = canvas.height,
+        PI = Math.PI / 180;
+    var d = -10;
+    var k = 40;
+    var status = true;
+    var offbuffer, offimage;
+
+    function lineTo(ctx, x0, y0, x1, y1) {
+      ctx.beginPath();
+      ctx.moveTo(x0, y0);
+      ctx.lineTo(x1, y1);
+      ctx.stroke();
+    }
+
+    function init () {
+      offimage = document.createElement("canvas");
+      offimage.width = width;
+      offimage.height = height;
+      offbuffer  offimage.getContext("2d");
+    }
+
+    function paint() {
+      if (status) {
+        d += 0.01;
+          if (d >= .6) {
+            status = false;
+          }
+      } else {
+        d -= 0.01;
+        if (d <= .3) {
+          status = true;
+        }
+      }
+      ctx.clearRect(0, 0, width, height);
+      offbuffer.clearRect(0, 0, offimage.width, offimage.height);
+      offbuffer.fillStyle = "#000";
+      render();
+      ctx.drawImage(offimage, 0, 0);
+
+    }
+
+    function render (ctx, x, y, size, angle, b, c) {
+      var x1, x2, x1l, x2l, x1r, x2r;
+      var y1, y2, y1l, y2l, y1r, y2r;
+      var s2 = 3, s3 = 1.1;
+      if (size > 2) {
+        x2 = x + Math.cos(angle * PI) * size;
+        y2 = y + Math.sin(angle * PI) * size;
+
+        x2l = x2 + Math.cos((angle - b) * PI) * (size /2 s2);
+      }
+    }
+
+  </script>
+</body>
+</html>

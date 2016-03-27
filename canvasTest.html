@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <canvas id = 'can'></canvas>
+    <script>
+      var lastTime = 0;
+      function calculateFps () {
+        var now = ( +new Date ),
+            fps = 1000 / (now - lastTime);
+        lastTime = now;
+        return fps;
+      }
+
+      function animate(time ) {
+        eraseBackgroud();
+        drawBackgroud();
+        update();
+        draw();
+
+        context.fillStyle = 'cornflowerblue';
+        context.fillText(calculateFps().toFixed() + 'fps', 20, 60);
+        window.requestNextAnimationFrame(animate);
+      }
+
+      window.requestNextAnimationFrame(animate);
+    </script>
+  </body>
+</html>

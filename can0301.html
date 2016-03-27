@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>text</title>
+</head>
+<body>
+    <canvas id="can" height="1000" width="800">not supported canvas</canvas>
+    <span>fillCheckbox</span><input type="checkbox" id="fillCheckbox">
+    <span>strokeCheckbox</span><input type="checkbox" id="strokeCheckbox">
+    <span>shadowCheckbox</span><input type="checkbox" id="shadowCheckbox">
+    <script>
+        var canvas = document.getElementById('can'),
+            ctx = canvas.getContext('2d'),
+            fontHeight = 24,
+            x, y;
+
+        var COLUMN =
+
+        function drawGrid (color, ) {
+
+        }
+
+        var textAlign = ['start', 'center', 'end', 'left', 'right'];
+        var textBaseline = ['top', 'bottom','middle', 'alphabetic', 'ideographic','hanging'];
+        for (var i = 0;i < textAlign.length; i++) {
+            for (var j = 0;j < textBaseline.length;j++) {
+                var text = textAlign[i] + " " + textBaseline[j];
+                ctx.font = 'oblique normal bold 24px palatino';
+                ctx.fillText(text, i * 200, j * 20);
+            }
+        }
+
+
+
+    </script>
+
+</body>
+</html>

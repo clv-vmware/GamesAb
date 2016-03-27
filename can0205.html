@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>radio</title>
+</head>
+<body>
+  <div id = 'radios'>
+    <input type="radio" id = 'repeatRadio' name = 'patternRadio' checked/>repeat
+    <input type="radio" id = 'repeatxRadio' name = 'patternRadio' />repeat - x
+    <input type="radio" id = 'repeatyRadio' name = 'patternRadio' />repeat-y
+    <input type="radio" id = 'norepeatyRadio' name = 'patternRadio' />no repeat
+  </div>
+  <canvs id="canvas" width = "450" height = "275"> canvas not supported</canvs>
+  <script type="text/javascript">
+    var canvas = document.getElementById('canvas'),
+        ctx = canvas.getContext('2d'),
+        repeatRadio = document.getElementById('repeatRadio'),
+        norepeatRadio = document.getElementById('norepeatRadio'),
+        repeatxRadio = document.getElementById('repeatxRadio'),
+        repeatyRadio = document.getElementById('repeatyRadio'),
+        image = new Image();
+
+    function fillCanvasWithPattern () {
+      var pattern = ctx.createPattern(image, repeatString);
+      ctx.clearRect
+    }
+  </script>
+</body>
+</html>

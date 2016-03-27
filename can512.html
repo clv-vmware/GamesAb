@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <canvas id = 'can'></canvas>
+    <script>
+      var lastFpsUpdateTime = 0,
+          lastFpsUpdate = 0;
+
+      function animate() {
+        var fps = 0;
+
+        if(time == undefined ){
+          time = +new Date;
+        }
+
+        if(!paused ) {
+          eraseBackgroud();
+          drawBackgroud();
+          update(time );
+          draw();
+
+          fps = calculateFps();
+
+          if(now - lastFpsUpdateTime > 1000) {
+            lastFpsUpdateTime = now;
+            lastFpsUpdate = fps;
+          }
+
+          context.fillStyle = 'cornflowerblue';
+          context.fillText(lastFpsUpdate.toFixed() + 'fps', 50, 48);
+        }
+
+      }
+    </script>
+  </body>
+</html>
