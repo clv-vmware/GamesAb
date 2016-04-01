@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>axis</title>
+</head>
+<body>
+    <canvas id="can" height = "500" width="500">not supported</canvas>
+    <script>
+        var canvas = document.getElementById('can'),
+            ctx = canvas.getContext('2d'),
+
+            HORIZONTAL_AXIS_MARGIN = 50,
+            VERTICAL_AXIS_MARGIN = 50,
+
+            AXIS_ORIGIN = {x: HORIZONTAL_AXIS_MARGIN,
+                          y: canvas.height - HORIZONTAL_AXIS_MARGIN },
+            AXIS_TOP = VERTICAL_AXIS_MARGIN,
+            AXIS_RIGHT = canvas.width - HORIZONTAL_AXIS_MARGIN,
+
+            HORIZONTAL_TICK_SPACING = 10,
+            VERTICAL_TICK_SPACING = 10,
+
+            AXIS_WIDTH = AXIS_RIGHT - AXIS_ORIGIN.x,
+            AXIS_HEIGHT = AXIS_ORIGIN.y - AXIS_TOP,
+
+            NUM_VERTICAL_TICKS = AXIS_HEIGHT / VERTICAL_TICK_SPACING,
+            NUM_HORIZONTAL_TICKS = AXIS_WIDTH / HORIZONTAL_TICK_SPACING,
+
+            TICK_WIDTH = 10,
+            SPACE_BETWEEN_LABELS_AND_AXIS = 20;
+
+            function drawAxes () {
+                ctx.save();
+                ctx.lineWidth = 1.0;
+                ctx.fillStyle = 'rgba(100, 140, 230, 0.8)';
+                ctx.strokeStyle = 'navy';
+
+                drawHorizontalAxis();
+                drawVerticalAxis();
+
+                ctx.lineWidth = 0.5;
+                ctx.strokeStyle = 'darkred';
+                drawVerticalAxisTicks();
+                drawHorizontalAxisTicks();
+
+                ctx.restore();
+            }
+
+            function drawHorizontalAxis() {
+              ctx.beginPath();
+              ctx.moveTo(AXIS_ORIGIN.x, AXIS_ORIGIN.y);
+              ctx.lineTo(AXIS_RIGHT, AXIS_ORIGIN.y);
+              ctx.stroke();
+            }
+
+            function drawVerticalAxis() {
+              ctx.beginPath();
+              ctx.moveTo(AXIS_ORIGIN.x, AXIS_ORIGIN.y);
+              ctx.lineTo(AXIS_ORIGIN.x, AXIS_TOP);
+              ctx.stroke();
+            }
+
+            function drawVerticalAxisTicks () {
+              var deltaY;
+
+              for(var i = 1;i < NUM_VERTICAL_TICKS; ++i) {
+                ctx.beginPath();
+                if (i % 5 === 0) deltaX = TICK_WIDTH;
+                else  deltaX = TICK_WIDTH / 2;
+
+                ctx.moveTo(AXIS_ORIGIN.x - deltaX, AXIS_ORIGIN.y - i * VERTICAL_TICK_SPACING);
+                ctx.lineTo(AXIS_ORIGIN.x + deltaX, AXIS_ORIGIN.y - i * VERTICAL_TICK_SPACING);
+
+                ctx.stroke();
+              }
+            }
+
+            function drawHorizontalAxisTicks() {
+              var deltaY;
+
+              for(var i = 1; i < NUM_HORIZONTAL_TICKS; ++i) {
+                ctx.beginPath();
+                if(i % 5 === 0) deltaY  = TICK_WIDTH;
+                else deltaY = TICK_WIDTH / 2;
+
+                ctx.moveTo(AXIS_ORIGIN.x + i * HORIZONTAL_TICK_SPACING, AXIS_ORIGIN.y - deltaY);
+                ctx.lineTo(AXIS_ORIGIN.x + i * HORIZONTAL_TICK_SPACING, AXIS_ORIGIN.y + deltaY);
+                ctx.stroke();
+              }
+            }
+
+            function drawAxisLabels () {
+                ctx.fillStyle = 'blue';
+                drawHorizontalAxisLabels();
+                drawVerticalAxisLabels();
+            }
+
+            function drawHorizontalAxisLabels () {
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'top';
+
+                for (var i = 0;i <= NUM_HORIZONTAL_TICKS;i++) {
+                    if (i % 5 === 0) {
+                        ctx.fillText(i,
+                            AXIS_ORIGIN.x + i * HORIZONTAL_TICK_SPACING,
+                            AXIS_ORIGIN.y + SPACE_BETWEEN_LABELS_AND_AXIS);
+                    }
+                }
+            }
+
+            function drawVerticalAxisLabels () {
+                ctx.textAlign = 'right';
+                ctx.textBaseline = 'middle';
+
+                for (var i = 0;i <= NUM_VERTICAL_TICKS;i++ ) {
+                    if (i % 5 === 0) {
+                        ctx.fillText(i,
+                            AXIS_ORIGIN.x - SPACE_BETWEEN_LABELS_AND_AXIS,
+                            AXIS_ORIGIN.y - i * VERTICAL_TICK_SPACING
+                        );
+                    }
+                }
+            }
+
+            //init
+
+            ctx.font = '13px Arial';
+            ctx.shadowColor = 'rgba(100, 140, 230, 0.8)';
+            ctx.shadowOffsetX = 3;
+            ctx.shadowOffsetY = 3;
+            ctx.shadowBlur = 5;
+
+            drawAxes();
+            drawAxisLabels();
+
+
+    </script>
+
+</body>
+</html>

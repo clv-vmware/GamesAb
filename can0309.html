@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>circle the text</title>
+</head>
+<body>
+    <canvas id="can" height = "500" width="500">not supt</canvas>
+    <script>
+        var canvas = document.getElementById('can'),
+            ctx = canvas.getContext('2d'),
+            TEXT_FILL_STYLE = 'rgba(100, 130, 240, 0.5)',
+            TEXT_STROKE_STYLE = 'rgba(200, 0, 0, 0.7)',
+            TEXT_SIZE = 64,
+
+            circle = {
+                x: canvas.width / 2,
+                y : canvas.height /2 ,
+                radius: 200
+            };
+
+        function drawCirclarText (string, startAngle, endAngle) {
+            var radius = circle.radius,
+                angleDecrement = (startAngle - endAngle) / (string.length - 1),
+                angle = parseFloat(startAngle),
+                index = 0,
+                character;
+
+            ctx.save();
+            ctx.fillStyle = TEXT_FILL_STYLE;
+            ctx.strokeStyle = TEXT_STROKE_STYLE;
+            ctx.font = TEXT_SIZE + 'px Lucida Sans';
+
+            while (index < string.length) {
+                character = string.charAt(index);
+
+                ctx.save();
+                ctx.beginPath();
+
+                ctx.translate(circle.x + Math.cos(angle) * radius,
+                              circle.y - Math.sin(angle) * radius );
+
+                ctx.rotate(Math.PI / 2 - angle);
+
+                ctx.fillText(character, 0, 0);
+                ctx.strokeText(character, 0, 0);
+
+                angle -= angleDecrement;
+                index++;
+
+                ctx.restore();
+            }
+
+            ctx.restore();
+        }
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        drawCirclarText("clockwise around the circle ", Math.PI*2 , Math.PI/ 4);
+    </script>
+
+</body>
+</html>

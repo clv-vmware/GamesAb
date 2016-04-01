@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>text</title>
+  <script src="http://cdn.bootcss.com/jquery/2.2.1/jquery.js"></script>
 </head>
 <body>
     <canvas id="can" height="1000" width="800">not supported canvas</canvas>
@@ -15,21 +16,120 @@
             fontHeight = 24,
             x, y;
 
-        var SPACING_LEFT =
+        var SPACING_LEFT = 20;
 
-        function drawGrid (color, ) {
+        function drawGrid (color, stepx, stepy ) {
 
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 0.5;
+            for (var i = stepx + 0.5 ;i  < ctx.canvas.width;i += stepx) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, ctx.canvas.height);
+                ctx.stroke();
+            }
+
+            for (var i = stepy + 0.5; i < ctx.canvas.height; i += stepy) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(ctx.canvas.width, i);
+                ctx.stroke();
+            }
         }
+
+        function drawTextMarker () {
+            ctx.fillStyle = 'yellow';
+            ctx.fillRect(x, y, 7, 7);
+            ctx.strokeRect(x, y, 7, 7);
+        }
+
+        function drawText ( text, textAlign, textBaseline) {
+            if (textAlign) {
+                ctx.textAlign = textAlign;
+            }
+            if (textBaseline) {
+                ctx.textBaseline= textBaseline;
+            }
+            ctx.fillStyle = 'cornflowerblue';
+            ctx.fillText(text, x, y);
+        }
+        function drawTextLine () {
+            ctx.strokeStyle = 'gray';
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + 738, y);
+            ctx.stroke();
+        }
+
+        ctx.font = 'oblique normal bolad 24px palatino';
+
+        drawGrid('lightgray', 10, 10);
 
         var textAlign = ['start', 'center', 'end', 'left', 'right'];
         var textBaseline = ['top', 'bottom','middle', 'alphabetic', 'ideographic','hanging'];
         for (var i = 0;i < textAlign.length; i++) {
             for (var j = 0;j < textBaseline.length;j++) {
-                var text = textAlign[i] + " " + textBaseline[j];
-                ctx.font = 'oblique normal bold 24px palatino';
-                ctx.fillText(text, i * 200, j * 20);
+                x = 20 + i * fontHeight * 15;
+                y = 20 + j* fontHeight * 3;
+
+                drawText(textAlign[i] + '/' + textBaseline[j], textAlign[i], textBaseline[j]);
+                drawTextMarker();
+                drawTextLine();
             }
         }
+
+        function getTextHeight (font) {
+            var text = $('<span>Hg</span>').css({ fontFamily: font });
+            var block = $('<div style="display: inline-block; width: 1px; height: 0px;">2sdfsfd</div>');
+            var div = $('<div></div>');
+            div.append(text, block); console.log(div);
+
+            var body = $('body');
+            body.append(div);
+
+            try {
+                var result = {};
+
+                block.css({verticalAlign: 'baseline'});
+                result.ascent = block.offset().top - text.offset().top;
+
+                block.css({verticalAlign: 'bottom'});
+                result.height = block.offset().top - text.offset().top;
+
+                result.descent = result.height - result.ascent;
+            } finally {
+                div.remove();
+            }
+
+            return result;
+        }
+
+        var testLine = function (ctx, x, y, len, style) {
+            ctx.strokeStyle = style;
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + len, y);
+            ctx.closePath();
+            ctx.stroke();
+        }
+
+        var font = '36pt Times';
+        var msg = 'Big Text';
+        ctx.fillStyle = 'black';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top';
+        ctx.font = font;
+        x = 500;
+        y = 300;
+        ctx.fillText(msg, x, y);
+
+        var w = ctx.measureText(msg).width;
+        var h = getTextHeight(font);
+        console.log(h);
+        testLine(ctx, x, y, w, 'red');
+        testLine(ctx, x, y + h.ascent, w, 'green');
+        testLine(ctx, x, y + h.height, w, 'blue');
+
 
 
 
