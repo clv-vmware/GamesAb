@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>venn diagram</title>
+</head>
+<body>
+    <canvas id="can" height="500" width="500">not supported</canvas>
+    <script>
+        var option = {
+            series: [
+                {
+                    name:"h1",
+                    id:0,
+                    value: 10
+                },
+                {
+                    name:"h2",
+                    id:1,
+                    value: 5
+                },
+                {
+                    name:"h3",
+                    id: 2,
+                    value: 5
+                },
+                {
+                    sets: [1,2],
+                    value: 3
+                }
+            ]
+        };
+        var canvas = document.getElementById('can'),
+            ctx = canvas.getContext('2d');
+        test();
+
+        function drawCircle (x, y, r, color) {
+            ctx.beginPath();
+            ctx.strokeStyle = color;
+            ctx.arc( x, y, r, 0, 2*Math.PI);
+            ctx.stroke();
+        }
+
+        function test () {
+            var r0 = 20,
+                r1 = 10,
+                r2 = 10;
+            var x0 = 40,
+                y0 = 40;
+            drawCircle( x0, y0, 20,  getcolor());
+            var x1 = x0 + Math.sqrt( Math.pow((r0 + r1), 2) - Math.pow( r1, 2)); console.log(x1);
+
+            drawCircle( x1, y0 - r1, 10, getcolor());
+            drawCircle( x1, y0 + r1, 10, getcolor());
+
+        }
+
+        function getcolor() {
+            var letters = '0123456789ABCDEF'.split('');
+            var color = '#';
+            for (var i = 0; i < 6; i++ ) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+    </script>
+
+</body>
+</html>
